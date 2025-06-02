@@ -301,7 +301,7 @@ Width="45" Height="30" Margin="155,-30,0,0"   FontSize="14" >
                 </Image>
             </Button>
 
-            <Border x:Name="border" Margin="10, 0, 0, 0" BorderBrush="{StaticResource GBorderColor}" BorderThickness="1" SnapsToDevicePixels="true" Width="180">
+            <Border x:Name="border" Margin="10, 0, 0, 0" BorderBrush="{StaticResource GBorderColor}" BorderThickness="1" SnapsToDevicePixels="true" Width="178">
 
                 <!--Надпись под кнопками-->
                 <Label Content="{Binding Text, ElementName=name_mt}" FontSize="14" FontWeight="Bold"  
