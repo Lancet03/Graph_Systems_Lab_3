@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Graph_Systems_Lab_3" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded">
+        Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded" Background="#FFEBEBEB" HorizontalAlignment="Left" VerticalAlignment="Center">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -16,20 +16,25 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
-        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
-        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#546A7B"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#0D1F2D"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#546A7B"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#0D1F2D"/>
         <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
         <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
-        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#EBEBEB"/>
+        <SolidColorBrush x:Key="GTextColor" Color="#0D1F2D"/>
+        <SolidColorBrush x:Key="GLightnTextColor" Color="#EBEBEB"/>
+        <SolidColorBrush x:Key="GElementBackgroundColor" Color="#546A7B"></SolidColorBrush>
+        <SolidColorBrush x:Key="GBorderColor" Color="#0D1F2D"></SolidColorBrush>
+
         <Style x:Key="component_button" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Foreground" Value="#EBEBEB"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -62,39 +67,133 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource GTextColor}" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource GTextColor}" />
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource component_button}">
+            <Setter Property="Foreground" Value="{StaticResource GTextColor}" />
+        </Style>
+        <Style x:Key="FocusVisual1">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background1" Color="#546A7B"/>
+        <SolidColorBrush x:Key="Button.Static.Border1" Color="#0D1F2D"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background1" Color="#546A7B"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border1" Color="#0D1F2D"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background1" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border1" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background1" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border1" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground1" Color="#EBEBEB"/>
+        <SolidColorBrush x:Key="GTextColor1" Color="#0D1F2D"/>
+        <Style x:Key="component_button1" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background1}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border1}"/>
+            <Setter Property="Foreground" Value="#EBEBEB"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border1}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border1}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border1}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="coords_buttons" BasedOn="{StaticResource component_button1}" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border1}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border1}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background1}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border1}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid x:Name="base">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
-            <RowDefinition Height="65*"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="55*"/>
+            <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
 
 
-        <StackPanel x:Name="navigation_elem" Grid.Column="0" Grid.RowSpan="3">
-            <StackPanel Orientation="Horizontal">
-
-                <Image Source="/logo.png" Width="34" Height="30" Margin="5, 0, 0, 0" VerticalAlignment="Center" 
-                           HorizontalAlignment="Left"/>
-
-                <Label Content="АксиОМА Контрол" FontSize="16" FontWeight="Bold" Foreground="black"
-       FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
+        <StackPanel x:Name="navigation_elem" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="130" Width="173">
+                <StackPanel.Background>
+                    <ImageBrush Stretch="Fill" TileMode="Tile"/>
+                </StackPanel.Background>
+                <Image Source="/logo.png" Margin="0, 0, 0, 0" Height="129" Width="173"/>
             </StackPanel>
-            <Button HorizontalAlignment="Right" Width="180" Margin="20,20,5,0" Foreground="#4f4f4f" Height="30" >
+
+            <Button Width="180" Margin="0,20,0,0"   Height="30" >
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Margin="-30, -7, 0, -7" 
+                    <Image Width="20" Height="20" Margin="-30,0,0,0" 
                            VerticalAlignment="Center" HorizontalAlignment="Left" Source="/main.png"/>
 
                     <StackPanel HorizontalAlignment="Left" Width="100" Margin="0, 0, 0, 0">
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" 
+                        <TextBlock Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" 
                                        FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
                         <Run Text="Главная"></Run>
                         </TextBlock>
@@ -102,17 +201,18 @@
 
                 </StackPanel>
 
+
             </Button>
 
-            <Button HorizontalAlignment="Right" Width="180" Margin="20,20,5,0" Foreground="#4f4f4f" Height="30">
+            <Button Width="180" Margin="0,20,0,0"   Height="30">
                 <StackPanel Orientation="Horizontal">
 
-                    <Image Source="/time.png" Width="20" Height="20" Margin="-30,-7,0,-7" 
+                    <Image Source="/time.png" Width="20" Height="20" Margin="-30,0,0,0" 
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                     <StackPanel HorizontalAlignment="Left" Width="100" Margin="0, 0, 0, 0">
 
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
+                        <TextBlock Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Left" VerticalAlignment="Center" 
                            FontSize="16" FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
                 <Run Text="Мониторинг"/>
                         </TextBlock>
@@ -120,26 +220,26 @@
                 </StackPanel>
             </Button>
 
-            <Button HorizontalAlignment="Right" Width="180" Margin="20,20,5,0" Foreground="#4f4f4f" Height="30">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/analysis.png" Width="20" Height="20" Margin="-30,-7,0,-7" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <Button Width="180" Margin="0,20,0,0"   Height="30">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Image Source="/analysis.png" Width="20" Height="20" Margin="-30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                     <StackPanel HorizontalAlignment="Left" Width="100" Margin="0, 0, 0, 0">
 
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
+                        <TextBlock Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
 <Run Text="Анализ"/>
                         </TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Button>
 
-            <Button HorizontalAlignment="Right" Width="180" Margin="20,20,5,0" Foreground="#4f4f4f" Height="30">
+            <Button Width="180" Margin="0,20,0,0"   Height="30">
                 <StackPanel Orientation="Horizontal">
 
-                    <Image Source="/report.png" Width="20" Height="20" Margin="-30,-7,0,-7" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Image Source="/report.png" Width="20" Height="20" Margin="-30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                     <StackPanel HorizontalAlignment="Left" Width="100" Margin="0, 0, 0, 0">
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
+                        <TextBlock Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
 <Run Text="Отчет"/>
                         </TextBlock>
                     </StackPanel>
@@ -148,40 +248,48 @@
 
 
             <!--выбор типа станка-->
-            <Label Content="Тип станка:" FontSize="14" FontWeight="Bold" Foreground="#4f4f4f"
-                FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left" Margin="10, 3, 0, 0" Height="24"/>
+            <Label Content="Тип станка:" FontSize="14" FontWeight="Bold"  
+                FontFamily="arial" FontStyle="Italic" Margin="10, 3, 0, 0" Height="24" Width="176"/>
 
             <!--Комбобокс станка-->
-            <ComboBox x:Name="type_mt" Width="170" Height="30" Margin="0, 3, 0,0" DropDownClosed="type_mtDDClosed"/>
+            <ComboBox x:Name="type_mt" Width="176" Height="30" Margin="0, 3, 0,0" DropDownClosed="type_mtDDClosed"/>
 
             <!--выбор наименования станка-->
-            <Label Content="Наименование станка:" FontSize="14" FontWeight="Bold" Foreground="#4f4f4f"
-                FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left" Margin="10, 3, 0, 0" Height="24"/>
+            <Label Content="Наименование станка:" FontSize="14" FontWeight="Bold"  
+                FontFamily="arial" FontStyle="Italic" Margin="10, 3, 0, 0" Height="24" Width="178"/>
 
             <!--комбобокс наименование станка-->
-            <ComboBox x:Name="name_mt" Width="170" Height="30" Margin="0, 3, 0,0" DropDownClosed="name_mtDCClosed"/>
+            <ComboBox x:Name="name_mt" Width="175" Height="30" Margin="0, 3, 0,0" DropDownClosed="name_mtDCClosed"/>
 
             <!-- Картинка станка-->
             <Image Width="180" Height="132" Margin="10, 20, 0, 0" Source="/machine_DA_330_W24.png" Stretch="Uniform"/>
 
             <!--Кнопки под картинкой-->
             <Button Style="{DynamicResource component_button}" FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left"
-        Width="45" Height="30" Margin="20, 0, 0, 0" Foreground="#4f4f4f" FontSize="14" >
-                <Image Width="25" Height="25" Margin="0, -2, 0, 0" Source="/video.png" Stretch="Uniform"/>
+        Width="46" Height="30" Margin="20, 0, 0, 0"   FontSize="14" >
+                <Image Width="25" Height="25" Source="/video.png" Stretch="Uniform"/>
             </Button>
 
             <Button Style="{DynamicResource component_button}" FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left"
-        Width="45" Height="30" Margin="65,-30,0,0" Foreground="#4f4f4f" FontSize="14" >
-                <Image Width="25" Height="25" Margin="0, -2, 0, 0" Source="/notes.png" Stretch="Uniform"/>
+        Width="46" Height="30" Margin="65,-30,0,0"   FontSize="14" VerticalAlignment="Center" >
+                <Image Width="25" Height="25" Source="/notes.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.OpacityMask>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <BitmapImage CacheOption="OnLoad" CreateOptions="IgnoreImageCache" UriSource="file:///C:/Users/iljae/AppData/Local/Microsoft/VisualStudio/17.0_02afe123/Designer/Cache/11064873419x86DD/notes.png"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Image.OpacityMask>
+                </Image>
             </Button>
 
             <Button Style="{DynamicResource component_button}" FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left"
-Width="45" Height="30" Margin="110,-30,0,0" Foreground="#4f4f4f" FontSize="14" >
-                <Image Width="25" Height="25" Margin="0, -2, 0, 0" Source="/left_arrow.png" Stretch="Uniform"/>
+Width="46" Height="30" Margin="110,-30,0,0"   FontSize="14" >
+                <Image Width="25" Height="25" Source="/left_arrow.png" Stretch="Uniform"/>
             </Button>
             <Button Style="{DynamicResource component_button}" FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Left"
-Width="45" Height="30" Margin="155,-30,0,0" Foreground="#4f4f4f" FontSize="14" >
-                <Image Width="25" Height="25" Margin="0, -2, 0, 0" Source="/left_arrow.png" Stretch="Uniform" RenderTransformOrigin="0.5,0.5">
+Width="45" Height="30" Margin="155,-30,0,0"   FontSize="14" >
+                <Image Width="25" Height="25" Source="/left_arrow.png" Stretch="Uniform" RenderTransformOrigin="0.5,0.5">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="-1"/>
@@ -193,42 +301,45 @@ Width="45" Height="30" Margin="155,-30,0,0" Foreground="#4f4f4f" FontSize="14" >
                 </Image>
             </Button>
 
-            <!--Надпись под кнопками-->
-            <Label Content="{Binding Text, ElementName=name_mt}" FontSize="14" FontWeight="Bold" Foreground="#4f4f4f"
-FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center" Margin="10, 0, 0, 0"/>
+            <Border x:Name="border" Margin="10, 0, 0, 0" BorderBrush="{StaticResource GBorderColor}" BorderThickness="1" SnapsToDevicePixels="true" Width="180">
 
+                <!--Надпись под кнопками-->
+                <Label Content="{Binding Text, ElementName=name_mt}" FontSize="14" FontWeight="Bold"  
+FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderBrush="{StaticResource GBorderColor}" FontStyle="Italic"  HorizontalAlignment="Center"  Width="178"/>
+
+            </Border>
 
             <!--Информация о готовности осей-->
-            <Button  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
-                        Width="36" Height="36" Margin="20, 0, 0, 0" Foreground="#4f4f4f" FontSize="14" Background="#FF2FB22F">
+            <Button Style="{DynamicResource coords_buttons}"  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
+                        Width="37" Height="36" Margin="20, -1, 0, 0"   FontSize="14" Background="#FF2FB22F">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" 
                                FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
                         <Run Text="X"/>
                 </TextBlock>
             </Button>
-            <Button  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
-                        Width="36" Height="36" Margin="56, -36, 0, 0" Foreground="#4f4f4f" FontSize="14" Background="#FF2FB22F">
+            <Button Style="{DynamicResource coords_buttons}" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
+                        Width="37" Height="36" Margin="56, -36, 0, 0"   FontSize="14" Background="#FF2FB22F">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" 
                                FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
                         <Run Text="Y"/>
                 </TextBlock>
             </Button>
-            <Button  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
-                        Width="36" Height="36" Margin="92, -36, 0, 0" Foreground="#4f4f4f" FontSize="14" Background="#FF2FB22F">
+            <Button Style="{DynamicResource coords_buttons}"  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
+                        Width="37" Height="36" Margin="92, -36, 0, 0"   FontSize="14" Background="#FF2FB22F">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" 
                                FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
                         <Run Text="Z"/>
                 </TextBlock>
             </Button>
-            <Button  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
-                        Width="36" Height="36" Margin="128, -36, 0, 0" Foreground="#4f4f4f" FontSize="14" Background="#FF2FB22F" >
+            <Button Style="{DynamicResource coords_buttons}"  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
+                        Width="37" Height="36" Margin="128, -36, 0, 0"   FontSize="14" Background="#FF2FB22F" >
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" 
                                FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
                         <Run Text="C"/>
                 </TextBlock>
             </Button>
-            <Button  FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
-        Width="36" Height="36" Margin="164, -36, 0, 0" Foreground="#4f4f4f" FontSize="14" Background="#FF3893B1">
+            <Button  Style="{DynamicResource coords_buttons}" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
+        Width="36" Height="36" Margin="164, -36, 0, 0"   FontSize="14" Background="#FF3893B1">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="11" 
                FontFamily="Arial" FontStyle="Italic" Margin="0,3,0,0">
         <Run Text="Авто"/>
@@ -237,52 +348,59 @@ FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center" Margin="10, 0
         </StackPanel>
 
         <!--описание заголовка основной области-->
-        <StackPanel x:Name="window" Grid.Column="1" Grid.ColumnSpan="2" Background="#e4e1d8">
-            <Label x:Name="baseLabel" FontSize="18" FontWeight="Bold" Foreground="#4f4f4f"
+        <StackPanel x:Name="window" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,477" Grid.RowSpan="2">
+            <Label x:Name="baseLabel" FontSize="18" FontWeight="Bold"  
                        FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!--Разметка под вывод сообщений компонентов системы-->
-        <StackPanel x:Name="component_says" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Background="#e4e1d8">
+        <StackPanel x:Name="component_says" Grid.Column="3" Grid.Row="2" Grid.RowSpan="1">
 
-            <Label Content="Текущее значение компонентов" FontSize="18" FontWeight="Bold" Foreground="black" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Center"/>
+            <Label Content="Вывод сообщений" FontSize="18" FontWeight="Bold" Foreground="black" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Center"/>
 
             <Line X1="10" Y1="0" X2="400" Y2="0" Stroke="Black"
                     StrokeThickness="1" HorizontalAlignment="Center"/>
 
             <StackPanel x:Name="button_components" Width="400" Height=" 600" HorizontalAlignment="Center" VerticalAlignment="Top">
 
-                <Button Style="{DynamicResource component_button}" Content="Шпиндель" FontFamily="Arial" FontStyle="Italic" Width="70" 
-                            Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="5, 20, 5, 0"/>
-                <Button Style="{DynamicResource component_button}" Content="Ось Х" FontFamily="Arial" FontStyle="Italic" Width="70" 
-                            Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="85, -25, 5, 0"/>
-                <Button Style="{DynamicResource component_button}" Content="Ось Y" FontFamily="Arial" FontStyle="Italic" Width="70" 
-                            Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="165, -25, 5, 0"/>
-                <Button Style="{DynamicResource component_button}" Content="Ось Z" FontFamily="Arial" FontStyle="Italic" Width="70" 
-                            Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="245, -25, 5, 0"/>
-                <Button Style="{DynamicResource component_button}" Content="СЧПУ" FontFamily="Arial" FontStyle="Italic" Width="70" 
-                            Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="325, -25, 5, 0" 
-                            Click="cncButton_Click"/>
+                <Button Style="{DynamicResource component_button}" Content="Шпиндель" FontFamily="Arial" FontStyle="Italic" Width="50" 
+                             FontSize="14" Height="25" HorizontalAlignment="Left" Margin="5, 10, 5, 0"/>
+                <Button Style="{DynamicResource component_button}" Content="Ось Х" FontFamily="Arial" FontStyle="Italic" Width="50" 
+                             FontSize="14" Height="25" HorizontalAlignment="Left" Margin="63, -25, 5, 0"/>
+                <Button Style="{DynamicResource component_button}" Content="Ось Y" FontFamily="Arial" FontStyle="Italic" Width="50" 
+                            FontSize="14" Height="25" HorizontalAlignment="Left" Margin="119, -25, 5, 0"/>
+                <Button Style="{DynamicResource component_button}" Content="Ось Z" FontFamily="Arial" FontStyle="Italic" Width="50" 
+                              FontSize="14" Height="25" HorizontalAlignment="Left" Margin="175, -25, 5, 0"/>
+                <Button Style="{DynamicResource component_button}" Content="Ось С" FontFamily="Arial" FontStyle="Italic" Width="50" 
+                              FontSize="14" Height="25" HorizontalAlignment="Left" Margin="233, -25, 5, 0" 
+                            />
+                <Button Style="{DynamicResource component_button}" Content="Ось С'" FontFamily="Arial" FontStyle="Italic" Width="50" 
+              FontSize="14" Height="25" HorizontalAlignment="Left" Margin="290, -25, 5, 0" 
+            />
+                <Button Style="{DynamicResource component_button}" Background="#23CE6B" Content="СЧПУ" FontFamily="Arial" FontStyle="Italic" Width="50" 
+              FontSize="14" Height="25" HorizontalAlignment="Left" Margin="345, -25, 5, 0" 
+            Click="cncButton_Click"/>
+
                 <Button Style="{DynamicResource component_button}" FontFamily="Arial" FontStyle="Italic" 
-                            Width="70" Foreground="#4f4f4f" FontSize="10" Height="25" HorizontalAlignment="Left" Margin="5, 10, 5, 0">
-                    <TextBlock TextAlignment="Center"><Run Text="Панель"/><LineBreak/><Run Text="оператора"/></TextBlock>
+                            Width="70"   FontSize="10" Height="25" HorizontalAlignment="Left" Margin="5, 5, 5, 0">
+                    <TextBlock Foreground="{StaticResource GLightnTextColor}" TextAlignment="Center"><Run Text="Панель"/><LineBreak/><Run Text="оператора"/></TextBlock>
                 </Button>
 
                 <Button Style="{DynamicResource component_button}" FontFamily="Arial" FontStyle="Italic" 
-                            Width="70" Foreground="#4f4f4f" FontSize="10" Height="25" HorizontalAlignment="Left" Margin="85, -25, 5, 0">
-                    <TextBlock TextAlignment="Center"><Run Text="Станочный"/><LineBreak/><Run Text="пульт"/></TextBlock>
+                            Width="70"   FontSize="10" Height="25" HorizontalAlignment="Left" Margin="85, -25, 5, 0">
+                    <TextBlock Foreground="{StaticResource GLightnTextColor}" TextAlignment="Center"><Run Text="Станочный"/><LineBreak/><Run Text="пульт"/></TextBlock>
                 </Button>
 
                 <Button Style="{DynamicResource component_button}" Content="Технология" FontFamily="Arial" FontStyle="Italic" 
-                            Width="70" Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="165, -25, 5, 0"/>
+                            Width="70"   FontSize="14" Height="25" HorizontalAlignment="Left" Margin="165, -25, 5, 0"/>
                 <Button Style="{DynamicResource component_button}" Content="Магазин" FontFamily="Arial" FontStyle="Italic" 
-                            Width="70" Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="245, -25, 5, 0"/>
-                <Button Style="{DynamicResource component_button}" Content="Питание" FontFamily="Arial" FontStyle="Italic" 
-                            Width="70" Foreground="#4f4f4f" FontSize="14" Height="25" HorizontalAlignment="Left" Margin="325, -25, 5, 0"/>
+                            Width="70"   FontSize="14" Height="25" HorizontalAlignment="Left" Margin="245, -25, 5, 0"/>
+                <Button Style="{DynamicResource component_button}"  Background="#23CE6B" Content="Питание" FontFamily="Arial" FontStyle="Italic" 
+                            Width="70"   FontSize="14" Height="25" HorizontalAlignment="Left" Margin="325, -25, 5, 0"/>
 
                 <!--Таблица для получения данных из БД-->
                 <DataGrid AutoGenerateColumns="false" x:Name="cncData" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle2}" 
-                              Height="600" Margin="5, 10, 5, 0" ItemsSource="{Binding}" FontSize="14">
+                              Height="170" Margin="5, 5, 5, 0" ItemsSource="{Binding}" FontSize="14">
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="dataGridTextColumn" Header="Наименование" Width="120" Binding="{Binding name}"/>
                         <DataGridTextColumn Header="Статус" Width="60" Binding="{Binding status}"/>
@@ -295,74 +413,15 @@ FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center" Margin="10, 0
 
         </StackPanel>
 
-        <!--Разметка под график загрузки оборудования-->
-        <StackPanel x:Name="chart_load" Grid.Column="1" Grid.Row="1" Background="#e4e1d8">
-            <Label Content="График загрузки оборудования" FontSize="18" FontWeight="Bold" Foreground="black"
-                       FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Center"/>
+       
 
+        <StackPanel x:Name="chart_working" Grid.Column="3" Grid.Row="1">
+            <Label Content="График изменения температуры привода главного движения" FontSize="12" FontWeight="Bold" Foreground="black" 
+                       FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center"/>
             <Line X1="10" Y1="0" X2="400" Y2="0" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center"/>
 
-            <DatePicker FirstDayOfWeek="Monday" SelectedDateFormat="Short" x:Name="date_now" SelectedDate="05/19/23" 
-                            Width="90" Margin="20, 10, 0, 0" HorizontalAlignment="Left" Height="25"/>
-            <DatePicker x:Name="time_begin" Width="90" Margin="120, -25, 0, 0" HorizontalAlignment="Left" Height="24"/>
-            <DatePicker x:Name="time_end" Width="90" Margin="220, -25, 0, 0" HorizontalAlignment="Left" Height="25"/>
-            <Button Name="load_button" Content="Вывод" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Left"
-                        Width="70" Height="25" Margin="320, -25, 0, 0" Foreground="#4f4f4f" FontSize="14" 
-                        Style="{DynamicResource component_button}" Click="load_button_Click"/>
-
-            <!--График загрузки оборудования - Гистограмма с накоплениями-->
-            <StackPanel Margin="0, 40, 0, 0">
-                <DockPanel x:Name="load_column_chart" Width="350" HorizontalAlignment="Center" Height="300" Margin="20,0,0,0">
-                    <DockPanel.DataContext>
-                        <local:DBDataViewModel x:Name="model"></local:DBDataViewModel>
-                    </DockPanel.DataContext>
-                    <Button Content="{Binding offPct}" DockPanel.Dock="Bottom" Background="Black" Name="offButton"/>
-
-                    <Button Content="{Binding loadPct}" DockPanel.Dock="Bottom" Background="Orange" Name="loadButton"/>
-
-                    <Button Content="{Binding onPct}" DockPanel.Dock="Bottom" Background="Green" Name="onButton"/>
-                </DockPanel>
-            </StackPanel>
-
-            <!--Подписи для граффика-->
-            <StackPanel x:Name="percentage_mt_load" Width="20" Height="300" HorizontalAlignment="Left" Margin="20,-350,0,-50">
-                <Label Content="100" Margin="0,0,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0"/>
-                <Label Content="80" Margin="0,50,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0"/>
-                <Label Content="60" Margin="0,50,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0"/>
-                <Label Content="20" Margin="0,50,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0"/>
-                <Label Content="0" Margin="0,50,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,0"/>
-            </StackPanel>
-
-            <!--Единицы измерения-->
-            <Label Content="%" RenderTransformOrigin="0.5, 0.5" Width="20" Margin="-85, -330, 0, 0" >
-                <Label.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Label.RenderTransform>
-            </Label>
-
-            <!--Подписи к графику-->
-            <StackPanel Margin="60, 20, 100, 0" HorizontalAlignment="Center" Width="254">
-                <Button Width="10" Height="10" Background="Black" HorizontalAlignment="Left"/>
-                <Label Content="Выключен" Margin="15, -19, 100, 0"/>
-                <Button Width="10" Height="10" Background="Orange" HorizontalAlignment="Left" Margin="90, -25, 0, 0"/>
-                <Label Content="Нагрузка" Margin="105, -26, 0, 0"/>
-                <Button Width="10" Height="10" Background="Green" HorizontalAlignment="Left" Margin="180, -25, 0, 0"/>
-                <Label Content="Включен" Margin="195, -26, 0, 0"/>
-            </StackPanel>
-
-        </StackPanel>
-
-        <StackPanel x:Name="chart_working" Grid.Column="1" Grid.Row="2" Background="#e4e1d8">
-            <Label Content="График работы за текущие сутки" FontSize="18" FontWeight="Bold" Foreground="black" 
-                       FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center"/>
-
             <StackPanel Margin="0, 20, 0, 0">
-                <DockPanel x:Name="working_row_chart" Width="350" Height="70" HorizontalAlignment="Center">
+                <DockPanel x:Name="working_row_chart" Width="350" Height="270" HorizontalAlignment="Center">
                     <DockPanel.DataContext>
                         <local:DBDataViewModel x:Name="model2"></local:DBDataViewModel>
 
@@ -399,11 +458,11 @@ FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center" Margin="10, 0
                     <Label Content="Включен" Margin="195, -26, 0, 0"/>
                 </StackPanel>
             </StackPanel>
-            <Button Content="Вывод" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Center"
-                        Width="70" Margin="255, 0, 0, 0" Foreground="#4f4f4f" FontSize="14" Height="25" Click="workingButton_Click"/>
+            <Button Content="Вывод" FontFamily="Arial" Style="{DynamicResource component_button}" FontStyle="Italic" HorizontalAlignment="Center"
+                        Width="70" Margin="255, 0, 0, 0"   FontSize="14" Height="25" Click="workingButton_Click"/>
         </StackPanel>
 
     </Grid>
 
-    
+
 </Window>

@@ -42,45 +42,45 @@ namespace Graph_Systems_Lab_3
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        public double onPct
-        {
-            get { return _onPct; }
-            set
-            {
-                _onPct = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("onPct"));
-                }
-            }
+        //public double onPct
+        //{
+        //    get { return _onPct; }
+        //    set
+        //    {
+        //        _onPct = value;
+        //        if (PropertyChanged != null)
+        //        {
+        //            PropertyChanged(this, new PropertyChangedEventArgs("onPct"));
+        //        }
+        //    }
 
-        }
+        //}
 
-        public double offPct
-        {
-            get { return _offPct; }
-            set
-            {
-                _offPct = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("offPct"));
-                }
-            }
-        }
+        //public double offPct
+        //{
+        //    get { return _offPct; }
+        //    set
+        //    {
+        //        _offPct = value;
+        //        if (PropertyChanged != null)
+        //        {
+        //            PropertyChanged(this, new PropertyChangedEventArgs("offPct"));
+        //        }
+        //    }
+        //}
 
-        public double loadPct
-        {
-            get { return _loadPct; }
-            set
-            {
-                _loadPct = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("loadPct"));
-                }
-            }
-        }
+        //public double loadPct
+        //{
+        //    get { return _loadPct; }
+        //    set
+        //    {
+        //        _loadPct = value;
+        //        if (PropertyChanged != null)
+        //        {
+        //            PropertyChanged(this, new PropertyChangedEventArgs("loadPct"));
+        //        }
+        //    }
+        //}
 
     }
     /// <summary>
@@ -175,49 +175,49 @@ namespace Graph_Systems_Lab_3
             DB.closeConnection();
         }
 
-        private void load_button_Click(object sender, RoutedEventArgs e)
-        {
-            string st_name = name_mt.Text;
-            DataTable dt = new DataTable();
-            DB.openConnection();
-            MySqlCommand command = new MySqlCommand("select * from machine_tool_load where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + st_name + "'));", DB.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(dt);
-            DB.closeConnection();
+        //private void load_button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string st_name = name_mt.Text;
+        //    DataTable dt = new DataTable();
+        //    DB.openConnection();
+        //    MySqlCommand command = new MySqlCommand("select * from machine_tool_load where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + st_name + "'));", DB.GetConnection());
+        //    adapter.SelectCommand = command;
+        //    adapter.Fill(dt);
+        //    DB.closeConnection();
 
-            int onSum = 0;
-            int loadSum = 0;
-            int offSum = 0;
+        //    int onSum = 0;
+        //    int loadSum = 0;
+        //    int offSum = 0;
 
-            foreach (DataRow dr in dt.Rows)
-            {
-                if ((string)dr["status"] == "on")
-                {
-                    onSum += int.Parse((string)(dr["time_mtl"]));
-                }
-                if ((string)dr["status"] == "load")
-                {
-                    loadSum += int.Parse((string)(dr["time_mtl"]));
-                }
-                if ((string)dr["status"] == "off")
-                {
-                    offSum += int.Parse((string)(dr["time_mtl"]));
-                }
-            }
-            model.onPct = Math.Round((double)onSum * 100 / 1440.0);
-            model.loadPct = Math.Round((double)loadSum * 100 / 1440.0);
-            model.offPct = Math.Round((double)offSum * 100 / 1440.0);
+        //    foreach (DataRow dr in dt.Rows)
+        //    {
+        //        if ((string)dr["status"] == "on")
+        //        {
+        //            onSum += int.Parse((string)(dr["time_mtl"]));
+        //        }
+        //        if ((string)dr["status"] == "load")
+        //        {
+        //            loadSum += int.Parse((string)(dr["time_mtl"]));
+        //        }
+        //        if ((string)dr["status"] == "off")
+        //        {
+        //            offSum += int.Parse((string)(dr["time_mtl"]));
+        //        }
+        //    }
+        //    model.onPct = Math.Round((double)onSum * 100 / 1440.0);
+        //    model.loadPct = Math.Round((double)loadSum * 100 / 1440.0);
+        //    model.offPct = Math.Round((double)offSum * 100 / 1440.0);
 
-            double norm_on = load_column_chart.Height * model.onPct / 100;
-            double norm_load = load_column_chart.Height * model.loadPct / 100;
-            double norm_off = load_column_chart.Height * model.offPct / 100;
+        //    double norm_on = load_column_chart.Height * model.onPct / 100;
+        //    double norm_load = load_column_chart.Height * model.loadPct / 100;
+        //    double norm_off = load_column_chart.Height * model.offPct / 100;
 
-            onButton.Height = norm_on;
-            offButton.Height = norm_off;
-            loadButton.Height = norm_load;
+        //    onButton.Height = norm_on;
+        //    offButton.Height = norm_off;
+        //    loadButton.Height = norm_load;
 
-            percentage_mt_load.Height = load_column_chart.Height;
-        }
+        //    percentage_mt_load.Height = load_column_chart.Height;
+        //}
 
         private void workingButton_Click(object sender, RoutedEventArgs e)
         {
