@@ -45,53 +45,228 @@ namespace Graph_Systems_Lab_3
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        //public double onPct
-        //{
-        //    get { return _onPct; }
-        //    set
-        //    {
-        //        _onPct = value;
-        //        if (PropertyChanged != null)
-        //        {
-        //            PropertyChanged(this, new PropertyChangedEventArgs("onPct"));
-        //        }
-        //    }
 
+        private void OnPropertyChanged([CallerMemberName] string prop = "") =>
+    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+
+        // Текущее положение по оси X
+        public string CurrentX
+        {
+            get { return _currentX; }
+            set
+            {
+                _currentX = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("CurrentX"));
+                }
+            }
+        }
+        private string _currentX;
+
+        // Текущее положение по оси Y
+        public string CurrentY
+        {
+            get { return _currentY; }
+            set
+            {
+                _currentY = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(CurrentY)));
+                }
+            }
+        }
+        private string _currentY;
+
+        // Текущее положение по оси Z
+        public string CurrentZ
+        {
+            get { return _currentZ; }
+            set
+            {
+                _currentZ = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(CurrentZ)));
+                }
+            }
+        }
+        private string _currentZ;
+
+        // Текущее значение оси C
+        public string CurrentC
+        {
+            get { return _currentC; }
+            set
+            {
+                _currentC = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(CurrentC)));
+                }
+            }
+        }
+        private string _currentC;
+
+        // Текущее значение оси C1
+        public string CurrentC1
+        {
+            get { return _currentC1; }
+            set
+            {
+                _currentC1 = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(CurrentC1)));
+                }
+            }
+        }
+        private string _currentC1;
+
+        // Целевое положение по оси X
+        public string TargetX
+        {
+            get { return _targetX; }
+            set
+            {
+                _targetX = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TargetX)));
+                }
+            }
+        }
+        private string _targetX;
+
+        // Целевое положение по оси Y
+        public string TargetY
+        {
+            get { return _targetY; }
+            set
+            {
+                _targetY = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TargetY)));
+                }
+            }
+        }
+        private string _targetY;
+
+        // Целевое положение по оси Z
+        public string TargetZ
+        {
+            get { return _targetZ; }
+            set
+            {
+                _targetZ = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TargetZ)));
+                }
+            }
+        }
+        private string _targetZ;
+
+        // Целевое значение оси C
+        public string TargetC
+        {
+            get { return _targetC; }
+            set
+            {
+                _targetC = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TargetC)));
+                }
+            }
+        }
+        private string _targetC;
+
+        // Целевое значение оси C1
+        public string TargetC1
+        {
+            get { return _targetC1; }
+            set
+            {
+                _targetC1 = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TargetC1)));
+                }
+            }
+        }
+        private string _targetC1;
+
+
+        //// Метод для обновления
+        //public void SetCoordinates(decimal[] current, decimal[] target)
+        //{
+        //    if (current.Length >= 5 && target.Length >= 5)
+        //    {
+        //        CurrentX = current[0].ToString("F1");
+        //        CurrentY = current[1].ToString("F1");
+        //        CurrentZ = current[2].ToString("F1");
+        //        CurrentC = current[3].ToString("F1");
+        //        CurrentC1 = current[4].ToString("F1");
+
+        //        TargetX = target[0].ToString("F1");
+        //        TargetY = target[1].ToString("F1");
+        //        TargetZ = target[2].ToString("F1");
+        //        TargetC = target[3].ToString("F1");
+        //        TargetC1 = target[4].ToString("F1");
+
+        //        OnPropertyChanged(null); // обновить всё
+        //    }
         //}
 
-        //public double offPct
-        //{
-        //    get { return _offPct; }
-        //    set
-        //    {
-        //        _offPct = value;
-        //        if (PropertyChanged != null)
-        //        {
-        //            PropertyChanged(this, new PropertyChangedEventArgs("offPct"));
-        //        }
-        //    }
-        //}
-
-        //public double loadPct
-        //{
-        //    get { return _loadPct; }
-        //    set
-        //    {
-        //        _loadPct = value;
-        //        if (PropertyChanged != null)
-        //        {
-        //            PropertyChanged(this, new PropertyChangedEventArgs("loadPct"));
-        //        }
-        //    }
-        //}
+        public double onPct
+    {
+        get { return _onPct; }
+        set
+        {
+            _onPct = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("onPct"));
+            }
+        }
 
     }
+
+    //public double offPct
+    //{
+    //    get { return _offPct; }
+    //    set
+    //    {
+    //        _offPct = value;
+    //        if (PropertyChanged != null)
+    //        {
+    //            PropertyChanged(this, new PropertyChangedEventArgs("offPct"));
+    //        }
+    //    }
+    //}
+
+    //public double loadPct
+    //{
+    //    get { return _loadPct; }
+    //    set
+    //    {
+    //        _loadPct = value;
+    //        if (PropertyChanged != null)
+    //        {
+    //            PropertyChanged(this, new PropertyChangedEventArgs("loadPct"));
+    //        }
+    //    }
+    //}
+
+}
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SpindleCoordinatesViewModel _coords = new SpindleCoordinatesViewModel();
 
         private Database DB;
         private DataTable table;
@@ -100,8 +275,7 @@ namespace Graph_Systems_Lab_3
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = _coords;
-
+            this.DataContext = this.model2;
             DB = new Database();
             table = new DataTable();
             adapter = new MySqlDataAdapter();
@@ -168,7 +342,18 @@ namespace Graph_Systems_Lab_3
                 baseLabel.Content = type_mt.Text + " " + name_mt.Text;
             }
             var coords = this.getCoordsData();
-            _coords.SetCoordinates(coords.current, coords.target);
+            //_coords.SetCoordinates(coords.current, coords.target);
+            model2.CurrentX = coords.current[0].ToString("F1");
+            model2.CurrentY = coords.current[1].ToString("F1");
+            model2.CurrentZ = coords.current[2].ToString("F1");
+            model2.CurrentC = coords.current[3].ToString("F1");
+            model2.CurrentC1 = coords.current[4].ToString("F1");
+
+            model2.TargetX = coords.target[0].ToString("F1");
+            model2.TargetY = coords.target[1].ToString("F1");
+            model2.TargetZ = coords.target[2].ToString("F1");
+            model2.TargetC = coords.target[3].ToString("F1");
+            model2.TargetC1 = coords.target[4].ToString("F1");
         }
 
         private void cncButton_Click(object sender, RoutedEventArgs e)
@@ -279,47 +464,49 @@ namespace Graph_Systems_Lab_3
                 }
             };
         }
+
+
     }
 
-    public class SpindleCoordinatesViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string prop = "") =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    //public class SpindleCoordinatesViewModel : INotifyPropertyChanged
+    //{
+    //    public event PropertyChangedEventHandler PropertyChanged;
+    //    private void OnPropertyChanged([CallerMemberName] string prop = "") =>
+    //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 
-        // Текущие
-        public string CurrentX { get; set; }
-        public string CurrentY { get; set; }
-        public string CurrentZ { get; set; }
-        public string CurrentC { get; set; }
-        public string CurrentC1 { get; set; }
+    //    // Текущие
+    //    public string CurrentX { get; set; }
+    //    public string CurrentY { get; set; }
+    //    public string CurrentZ { get; set; }
+    //    public string CurrentC { get; set; }
+    //    public string CurrentC1 { get; set; }
 
-        // Конечные
-        public string TargetX { get; set; }
-        public string TargetY { get; set; }
-        public string TargetZ { get; set; }
-        public string TargetC { get; set; }
-        public string TargetC1 { get; set; }
+    //    // Конечные
+    //    public string TargetX { get; set; }
+    //    public string TargetY { get; set; }
+    //    public string TargetZ { get; set; }
+    //    public string TargetC { get; set; }
+    //    public string TargetC1 { get; set; }
 
-        // Метод для обновления
-        public void SetCoordinates(decimal[] current, decimal[] target)
-        {
-            if (current.Length >= 5 && target.Length >= 5)
-            {
-                CurrentX = current[0].ToString("F1");
-                CurrentY = current[1].ToString("F1");
-                CurrentZ = current[2].ToString("F1");
-                CurrentC = current[3].ToString("F1");
-                CurrentC1 = current[4].ToString("F1");
+    //    // Метод для обновления
+    //    public void SetCoordinates(decimal[] current, decimal[] target)
+    //    {
+    //        if (current.Length >= 5 && target.Length >= 5)
+    //        {
+    //            CurrentX = current[0].ToString("F1");
+    //            CurrentY = current[1].ToString("F1");
+    //            CurrentZ = current[2].ToString("F1");
+    //            CurrentC = current[3].ToString("F1");
+    //            CurrentC1 = current[4].ToString("F1");
 
-                TargetX = target[0].ToString("F1");
-                TargetY = target[1].ToString("F1");
-                TargetZ = target[2].ToString("F1");
-                TargetC = target[3].ToString("F1");
-                TargetC1 = target[4].ToString("F1");
+    //            TargetX = target[0].ToString("F1");
+    //            TargetY = target[1].ToString("F1");
+    //            TargetZ = target[2].ToString("F1");
+    //            TargetC = target[3].ToString("F1");
+    //            TargetC1 = target[4].ToString("F1");
 
-                OnPropertyChanged(null); // обновить всё
-            }
-        }
-    }
+    //            OnPropertyChanged(null); // обновить всё
+    //        }
+    //    }
+    //}
 }

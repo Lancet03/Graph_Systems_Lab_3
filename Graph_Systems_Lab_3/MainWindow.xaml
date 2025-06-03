@@ -17,7 +17,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-       
+
         <SolidColorBrush x:Key="Button.Static.Background" Color="#546A7B"/>
         <SolidColorBrush x:Key="Button.Static.Border" Color="#0D1F2D"/>
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#546A7B"/>
@@ -350,11 +350,7 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
             </Button>
         </StackPanel>
 
-        <!--описание заголовка основной области-->
-        <StackPanel x:Name="window" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,0,37">
-            <Label x:Name="baseLabel" FontSize="18" FontWeight="Bold"  
-                       FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center"/>
-        </StackPanel>
+
 
         <!--Разметка под вывод сообщений компонентов системы-->
         <StackPanel x:Name="component_says" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Margin="0,403,0,0">
@@ -416,7 +412,7 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
 
         </StackPanel>
 
-        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2"  Width="440" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Height="522">
 
             <!-- Температурные индикаторы -->
             <Border Background="{StaticResource GElementBackgroundColor}" BorderBrush="{StaticResource GBorderColor}"  BorderThickness="1" CornerRadius="8" Padding="10" Margin="0 0 0 10" Width="393">
@@ -597,7 +593,11 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                     <Label Content="Включен" Margin="195, -26, 0, 0"/>
                 </StackPanel>
             </StackPanel>
-             </StackPanel>
+        </StackPanel>
+
+        <Label  Grid.Column="3" Grid.ColumnSpan="2" x:Name="baseLabel" FontSize="18" FontWeight="Bold"  
+           FontFamily="arial" FontStyle="Italic" Height="28" HorizontalContentAlignment="Center" />
+       
 
     </Grid>
 
