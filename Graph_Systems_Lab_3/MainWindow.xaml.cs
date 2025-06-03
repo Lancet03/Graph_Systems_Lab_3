@@ -108,27 +108,28 @@ namespace Graph_Systems_Lab_3
             if ((type_mt != null) && (name_mt != null) && (baseLabel != null))
             {
                 baseLabel.Content = type_mt.Text + " " + name_mt.Text;
+
+                var coords = this.getCoordsData();
+                //_coords.SetCoordinates(coords.current, coords.target);
+                model2.CurrentX = coords.current[0].ToString("F1");
+                model2.CurrentY = coords.current[1].ToString("F1");
+                model2.CurrentZ = coords.current[2].ToString("F1");
+                model2.CurrentC = coords.current[3].ToString("F1");
+                model2.CurrentC1 = coords.current[4].ToString("F1");
+
+                model2.TargetX = coords.target[0].ToString("F1");
+                model2.TargetY = coords.target[1].ToString("F1");
+                model2.TargetZ = coords.target[2].ToString("F1");
+                model2.TargetC = coords.target[3].ToString("F1");
+                model2.TargetC1 = coords.target[4].ToString("F1");
+
+                var cncData = GetCNCData();
+                model2.Feed = cncData.feed;
+                model2.Speed = cncData.speed;
+                model2.FeedPercent = cncData.feedPercent;
+                model2.SpeedPercent = cncData.speedPercent;
+                model2.TempMax = cncData.tempMax;
             }
-            var coords = this.getCoordsData();
-            //_coords.SetCoordinates(coords.current, coords.target);
-            model2.CurrentX = coords.current[0].ToString("F1");
-            model2.CurrentY = coords.current[1].ToString("F1");
-            model2.CurrentZ = coords.current[2].ToString("F1");
-            model2.CurrentC = coords.current[3].ToString("F1");
-            model2.CurrentC1 = coords.current[4].ToString("F1");
-
-            model2.TargetX = coords.target[0].ToString("F1");
-            model2.TargetY = coords.target[1].ToString("F1");
-            model2.TargetZ = coords.target[2].ToString("F1");
-            model2.TargetC = coords.target[3].ToString("F1");
-            model2.TargetC1 = coords.target[4].ToString("F1");
-
-            var cncData = GetCNCData();
-            model2.Feed = cncData.feed;
-            model2.Speed = cncData.speed;
-            model2.FeedPercent = cncData.feedPercent;
-            model2.SpeedPercent = cncData.speedPercent;
-            model2.TempMax = cncData.tempMax;
         }
 
         private (double feed, double speed, decimal feedPercent, decimal speedPercent, double tempMax) GetCNCData()
@@ -202,16 +203,10 @@ namespace Graph_Systems_Lab_3
             string timeBeginStr = beginTime.ToString(@"hh\:mm\:ss");
             string timeEndStr = endTime.ToString(@"hh\:mm\:ss");
             string mt_name = name_mt.Text;
-            DataTable dt = new DataTable();
-            DB.openConnection();
-            MySqlCommand command = new MySqlCommand(@"select * from machine_tool_properties 
-                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
-                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}'" +
-                                                      ";", DB.GetConnection());
 
-            adapter.SelectCommand = command;
-            adapter.Fill(dt);
-            DB.closeConnection();
+            var dt = MakeDbQuery(@"select * from machine_tool_properties 
+                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}';");
 
             decimal[] currentCoords = new decimal[5];
             decimal[] endCoords = new decimal[5];
@@ -241,16 +236,9 @@ namespace Graph_Systems_Lab_3
             string timeBeginStr = beginTime.ToString(@"hh\:mm\:ss");
             string timeEndStr = endTime.ToString(@"hh\:mm\:ss");
             string mt_name = name_mt.Text;
-            DataTable dt = new DataTable();
-            DB.openConnection();
-            MySqlCommand command = new MySqlCommand(@"select * from machine_tool_properties 
+            DataTable dt = MakeDbQuery(@"select * from machine_tool_properties 
                                                       where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
-                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}'" +
-                                                      ";", DB.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(dt);
-            DB.closeConnection();
-
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}';");
             double v;
             DateTime t;
             SeriesCollection sc = new SeriesCollection();
@@ -270,7 +258,6 @@ namespace Graph_Systems_Lab_3
                 time = (TimeSpan)(dr["time"]);
                 temp = (decimal)(dr["tempC"]);
                 data.Add((time, temp));
-
             }
 
             var values = new ChartValues<ObservablePoint>(
