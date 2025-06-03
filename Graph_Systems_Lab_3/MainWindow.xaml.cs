@@ -23,13 +23,18 @@ using Org.BouncyCastle.Asn1.Cms;
 using System.Runtime.CompilerServices;
 using Graph_Systems_Lab_3.ViewModels;
 
+
+
 namespace Graph_Systems_Lab_3
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        double MAX_SPEED = 1000;
+        double MAX_FEED = 1000;
 
         private Database DB;
         private DataTable table;
@@ -117,6 +122,65 @@ namespace Graph_Systems_Lab_3
             model2.TargetZ = coords.target[2].ToString("F1");
             model2.TargetC = coords.target[3].ToString("F1");
             model2.TargetC1 = coords.target[4].ToString("F1");
+
+            var cncData = GetCNCData();
+            model2.Feed = cncData.feed;
+            model2.Speed = cncData.speed;
+            model2.FeedPercent = cncData.feedPercent;
+            model2.SpeedPercent = cncData.speedPercent;
+            model2.TempMax = cncData.tempMax;
+        }
+
+        private (double feed, double speed, decimal feedPercent, decimal speedPercent, double tempMax) GetCNCData()
+        {
+            TimeSpan beginTime = time_begin.Value?.TimeOfDay ?? new TimeSpan(0, 0, 0);
+            TimeSpan endTime = time_end.Value?.TimeOfDay ?? new TimeSpan(23, 59, 59);
+            string timeBeginStr = beginTime.ToString(@"hh\:mm\:ss");
+            string timeEndStr = endTime.ToString(@"hh\:mm\:ss");
+            string mt_name = name_mt.Text;
+            DataTable dt = MakeDbQuery(@"select * from machine_tool_properties 
+                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}'" +
+                                                      ";");
+
+            double feed = 0;
+            double speed = 0;
+            double tempMax = 0;
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                feed = Convert.ToDouble(dr["Feed"]);
+                speed = Convert.ToDouble(dr["Speed"]);
+            }
+
+            DataTable dtTemp = MakeDbQuery(@"select MAX(tempC) as tempMax from machine_tool_properties 
+                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}'" +
+                                                      ";");
+            if (dtTemp.Rows.Count > 0)
+            {
+                DataRow dr = dtTemp.Rows[0];
+                tempMax = Convert.ToDouble(dr["tempMax"]);
+            }
+
+            decimal feedPercent = ((decimal)(feed / MAX_FEED * 100));
+            decimal speedPercent = ((decimal)(speed / MAX_SPEED * 100));
+
+
+            return (feed, speed, feedPercent, speedPercent, tempMax);
+        }
+
+        private DataTable MakeDbQuery(string query)
+        {
+            DataTable dt = new DataTable();
+            DB.openConnection();
+            MySqlCommand command = new MySqlCommand(query, DB.GetConnection());
+
+            adapter.SelectCommand = command;
+            adapter.Fill(dt);
+            DB.closeConnection();
+            return dt;
         }
 
         private void cncButton_Click(object sender, RoutedEventArgs e)
@@ -222,54 +286,10 @@ namespace Graph_Systems_Lab_3
                     PointGeometrySize = 6,
                     StrokeThickness = 2,
                     Fill = Brushes.Transparent,
-                    DataLabels = true, // ✅ включить подписи над точками
-                    LabelPoint = point => $"{point.Y:F1}°" // подпись: температура
+                    DataLabels = true, 
+                    LabelPoint = point => $"{point.Y:F1}°"
                 }
             };
         }
-
-
     }
-
-    //public class SpindleCoordinatesViewModel : INotifyPropertyChanged
-    //{
-    //    public event PropertyChangedEventHandler PropertyChanged;
-    //    private void OnPropertyChanged([CallerMemberName] string prop = "") =>
-    //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-
-    //    // Текущие
-    //    public string CurrentX { get; set; }
-    //    public string CurrentY { get; set; }
-    //    public string CurrentZ { get; set; }
-    //    public string CurrentC { get; set; }
-    //    public string CurrentC1 { get; set; }
-
-    //    // Конечные
-    //    public string TargetX { get; set; }
-    //    public string TargetY { get; set; }
-    //    public string TargetZ { get; set; }
-    //    public string TargetC { get; set; }
-    //    public string TargetC1 { get; set; }
-
-    //    // Метод для обновления
-    //    public void SetCoordinates(decimal[] current, decimal[] target)
-    //    {
-    //        if (current.Length >= 5 && target.Length >= 5)
-    //        {
-    //            CurrentX = current[0].ToString("F1");
-    //            CurrentY = current[1].ToString("F1");
-    //            CurrentZ = current[2].ToString("F1");
-    //            CurrentC = current[3].ToString("F1");
-    //            CurrentC1 = current[4].ToString("F1");
-
-    //            TargetX = target[0].ToString("F1");
-    //            TargetY = target[1].ToString("F1");
-    //            TargetZ = target[2].ToString("F1");
-    //            TargetC = target[3].ToString("F1");
-    //            TargetC1 = target[4].ToString("F1");
-
-    //            OnPropertyChanged(null); // обновить всё
-    //        }
-    //    }
-    //}
 }

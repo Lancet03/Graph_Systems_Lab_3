@@ -11,9 +11,11 @@ namespace Graph_Systems_Lab_3.ViewModels
 {
     public class DBDataViewModel : INotifyPropertyChanged
     {
-        private double _onPct;
-        private double _offPct;
-        private double _loadPct;
+        private double _feed;
+        private double _speed;
+        private double _tempMax;
+        private decimal _feedPercent;
+        private decimal _speedPercent;
         private SeriesCollection seriesCollection;
 
 
@@ -185,66 +187,73 @@ namespace Graph_Systems_Lab_3.ViewModels
         private string _targetC1;
 
 
-        //// Метод для обновления
-        //public void SetCoordinates(decimal[] current, decimal[] target)
-        //{
-        //    if (current.Length >= 5 && target.Length >= 5)
-        //    {
-        //        CurrentX = current[0].ToString("F1");
-        //        CurrentY = current[1].ToString("F1");
-        //        CurrentZ = current[2].ToString("F1");
-        //        CurrentC = current[3].ToString("F1");
-        //        CurrentC1 = current[4].ToString("F1");
-
-        //        TargetX = target[0].ToString("F1");
-        //        TargetY = target[1].ToString("F1");
-        //        TargetZ = target[2].ToString("F1");
-        //        TargetC = target[3].ToString("F1");
-        //        TargetC1 = target[4].ToString("F1");
-
-        //        OnPropertyChanged(null); // обновить всё
-        //    }
-        //}
-
-        public double onPct
+        public double Feed
         {
-            get { return _onPct; }
+            get { return _feed; }
             set
             {
-                _onPct = value;
+                _feed = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("onPct"));
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(Feed)));
+                }
+            }
+
+        }
+        public decimal FeedPercent
+        {
+            get { return _feedPercent; }
+            set
+            {
+                _feedPercent = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(FeedPercent)));
                 }
             }
 
         }
 
-        //public double offPct
-        //{
-        //    get { return _offPct; }
-        //    set
-        //    {
-        //        _offPct = value;
-        //        if (PropertyChanged != null)
-        //        {
-        //            PropertyChanged(this, new PropertyChangedEventArgs("offPct"));
-        //        }
-        //    }
-        //}
+        public double Speed
+        {
+            get { return _speed; }
+            set
+            {
+                _speed = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(Speed)));
+                }
+            }
 
-        //public double loadPct
-        //{
-        //    get { return _loadPct; }
-        //    set
-        //    {
-        //        _loadPct = value;
-        //        if (PropertyChanged != null)
-        //        {
-        //            PropertyChanged(this, new PropertyChangedEventArgs("loadPct"));
-        //        }
-        //    }
-        //}
+        }
 
+        public decimal SpeedPercent
+        {
+            get { return _speedPercent; }
+            set
+            {
+                _speedPercent = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(SpeedPercent)));
+                }
+            }
+
+        }
+
+        public double TempMax
+        {
+            get { return _tempMax; }
+            set
+            {
+                _tempMax = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TempMax)));
+                }
+            }
+
+        }
     }
 }

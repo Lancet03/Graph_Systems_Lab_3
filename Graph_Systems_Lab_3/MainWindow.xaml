@@ -189,7 +189,11 @@
                 <StackPanel.Background>
                     <ImageBrush Stretch="Fill" TileMode="Tile"/>
                 </StackPanel.Background>
-                <Image Source="/logo.png" Margin="0, 0, 0, 0" Height="129" Width="173"/>
+                <Image Source="/logo.png" Margin="0, 0, 0, 0" Height="129" Width="173">
+                    <Image.OpacityMask>
+                        <ImageBrush ImageSource="/logo.png"/>
+                    </Image.OpacityMask>
+                </Image>
             </StackPanel>
 
             <Button Width="180" Margin="0,20,0,0"   Height="30" >
@@ -440,7 +444,7 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                     <StackPanel HorizontalAlignment="Right" Margin="10 0 0 0">
                         <TextBlock Text="Tₘₐₓ °C" FontSize="12" Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Center"/>
                         <Border BorderBrush="{StaticResource GBorderColor}"  BorderThickness="1" Background="{StaticResource GLightnTextColor}" CornerRadius="4" Padding="4" Width="50" HorizontalAlignment="Center">
-                            <TextBlock Text="60" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding TempMax}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </StackPanel>
@@ -458,15 +462,18 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="F" FontSize="24" FontWeight="Bold" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
-                    <TextBlock Text="0.000" Grid.Column="1" FontSize="18" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
-                    <TextBlock Text="100%" Grid.Column="2" FontSize="14" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Feed}" Grid.Column="1" FontSize="18" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBlock Text="{Binding FeedPercent}" Grid.Column="2" FontSize="14" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
+                    <Label Grid.Column="3"  Content="%"  FontSize="14" Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
 
                     <TextBlock Text="S" Grid.Row="1" FontSize="24" FontWeight="Bold" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
-                    <TextBlock Text="0" Grid.Row="1" Grid.Column="1" FontSize="18" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
-                    <TextBlock Text="100%" Grid.Row="1" Grid.Column="2" FontSize="14" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Speed}" Grid.Row="1" Grid.Column="1" FontSize="18" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBlock Text="{Binding SpeedPercent}" Grid.Row="1" Grid.Column="2" FontSize="14" Foreground="{StaticResource GLightnTextColor}" VerticalAlignment="Center"/>
+                    <Label Grid.Column="3" Grid.Row="1" Content="%"  FontSize="14" Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
                 </Grid>
             </Border>
 
