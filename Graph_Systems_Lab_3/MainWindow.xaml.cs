@@ -18,6 +18,8 @@ using MySql.Data.MySqlClient;
 using System.ComponentModel;
 using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace Graph_Systems_Lab_3
 {
@@ -221,16 +223,23 @@ namespace Graph_Systems_Lab_3
 
         private void workingButton_Click(object sender, RoutedEventArgs e)
         {
+            TimeSpan beginTime = time_begin.Value?.TimeOfDay ?? new TimeSpan(0, 0, 0);
+            TimeSpan endTime = time_end.Value?.TimeOfDay ?? new TimeSpan(23, 59, 59);
+            string timeBeginStr = beginTime.ToString(@"hh\:mm\:ss");
+            string timeEndStr = endTime.ToString(@"hh\:mm\:ss");
             string mt_name = name_mt.Text;
             DataTable dt = new DataTable();
             DB.openConnection();
-            MySqlCommand command = new MySqlCommand("select * from machine_tool_load where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'));", DB.GetConnection());
+            MySqlCommand command = new MySqlCommand(@"select * from machine_tool_properties 
+                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}'" +
+                                                      ";", DB.GetConnection());
             adapter.SelectCommand = command;
             adapter.Fill(dt);
             DB.closeConnection();
 
             double v;
-
+            DateTime t;
             SeriesCollection sc = new SeriesCollection();
 
             Brush onBrush = new SolidColorBrush(Color.FromRgb(0, 192, 0));
@@ -239,25 +248,35 @@ namespace Graph_Systems_Lab_3
 
             Brush currentBrush = onBrush;
 
+            var data = new List<(TimeSpan Time, decimal Temperature)>();
+            TimeSpan time;
+            decimal temp;
+
             foreach (DataRow dr in dt.Rows)
             {
-                v = (double.Parse((string)(dr["time_mtl"]))) / 60.0;
+                time = (TimeSpan)(dr["time"]);
+                temp = (decimal)(dr["tempC"]);
+                data.Add((time, temp));
 
-                if ((string)dr["status"] == "on")
-                    currentBrush = onBrush;
-                if ((string)dr["status"] == "off")
-                    currentBrush = offBrush;
-                if ((string)dr["status"] == "load")
-                    currentBrush = loadBrush;
-
-                sc.Add(new StackedRowSeries
-                {
-                    StackMode = StackMode.Values,
-                    Values = new ChartValues<double> { v },
-                    Fill = currentBrush
-                });
             }
-            model2.SeriesCollection = sc;
+
+            var values = new ChartValues<ObservablePoint>(
+                data.Select(p => new ObservablePoint(p.Time.TotalMinutes, (double)p.Temperature))
+            );
+
+
+            model2.SeriesCollection = new SeriesCollection{
+                new LineSeries
+                {
+                    Title = "Привод ГД",
+                    Values = values,
+                    PointGeometrySize = 6,
+                    StrokeThickness = 2,
+                    Fill = Brushes.Transparent,
+                    DataLabels = true, // ✅ включить подписи над точками
+                    LabelPoint = point => $"{point.Y:F1}°" // подпись: температура
+                }
+            };
         }
     }
 }

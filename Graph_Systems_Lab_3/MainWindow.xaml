@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Graph_Systems_Lab_3" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded" Background="#FFEBEBEB" HorizontalAlignment="Left" VerticalAlignment="Center">
+        Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded" Background="#FFEBEBEB" HorizontalAlignment="Left" VerticalAlignment="Center" Icon="/logo.png">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -166,10 +167,11 @@
 
     <Grid x:Name="base">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="210*"/>
+            <ColumnDefinition Width="210*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -179,7 +181,7 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel x:Name="navigation_elem" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2">
+        <StackPanel x:Name="navigation_elem" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="130" Width="173">
                 <StackPanel.Background>
                     <ImageBrush Stretch="Fill" TileMode="Tile"/>
@@ -348,13 +350,13 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
         </StackPanel>
 
         <!--описание заголовка основной области-->
-        <StackPanel x:Name="window" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,477" Grid.RowSpan="2">
+        <StackPanel x:Name="window" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,0,37">
             <Label x:Name="baseLabel" FontSize="18" FontWeight="Bold"  
                        FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!--Разметка под вывод сообщений компонентов системы-->
-        <StackPanel x:Name="component_says" Grid.Column="3" Grid.Row="2" Grid.RowSpan="1">
+        <StackPanel x:Name="component_says" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Margin="0,403,0,0">
 
             <Label Content="Вывод сообщений" FontSize="18" FontWeight="Bold" Foreground="black" FontFamily="Arial" FontStyle="Italic" HorizontalAlignment="Center"/>
 
@@ -413,12 +415,19 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
 
         </StackPanel>
 
-       
 
-        <StackPanel x:Name="chart_working" Grid.Column="3" Grid.Row="1">
+
+        <StackPanel x:Name="chart_working" Grid.Column="4" Grid.Row="1">
             <Label Content="График изменения температуры привода главного движения" FontSize="12" FontWeight="Bold" Foreground="black" 
                        FontFamily="arial" FontStyle="Italic" HorizontalAlignment="Center"/>
             <Line X1="10" Y1="0" X2="400" Y2="0" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center"/>
+
+            <DatePicker FirstDayOfWeek="Monday" SelectedDateFormat="Short" x:Name="date_now" SelectedDate="05/19/23" 
+                            Width="90" Margin="20, 10, 0, 0" HorizontalAlignment="Left" Height="25"/>
+            <xctk:TimePicker  Format="Custom" FormatString="HH:mm" x:Name="time_begin" Width="90" Margin="120, -25, 0, 0" HorizontalAlignment="Left" Height="24" />
+            <xctk:TimePicker  Format="Custom" FormatString="HH:mm" x:Name="time_end" Width="90" Margin="220, -25, 0, 0" HorizontalAlignment="Left" Height="25"/>
+            <Button Content="Вывод" FontFamily="Arial" Style="{DynamicResource component_button}" FontStyle="Italic" HorizontalAlignment="Center"
+            Width="70" Margin="290,-25, 0, 0"   FontSize="14" Height="25" Click="workingButton_Click"/>
 
             <StackPanel Margin="0, 20, 0, 0">
                 <DockPanel x:Name="working_row_chart" Width="350" Height="270" HorizontalAlignment="Center">
@@ -458,9 +467,7 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
                     <Label Content="Включен" Margin="195, -26, 0, 0"/>
                 </StackPanel>
             </StackPanel>
-            <Button Content="Вывод" FontFamily="Arial" Style="{DynamicResource component_button}" FontStyle="Italic" HorizontalAlignment="Center"
-                        Width="70" Margin="255, 0, 0, 0"   FontSize="14" Height="25" Click="workingButton_Click"/>
-        </StackPanel>
+             </StackPanel>
 
     </Grid>
 
