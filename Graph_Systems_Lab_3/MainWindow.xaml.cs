@@ -20,10 +20,11 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 using Org.BouncyCastle.Asn1.Cms;
+using System.Runtime.CompilerServices;
 
 namespace Graph_Systems_Lab_3
 {
-    public class DBDataViewModel : INotifyPropertyChanged
+     public class DBDataViewModel : INotifyPropertyChanged
     {
         private double _onPct;
         private double _offPct;
@@ -90,6 +91,8 @@ namespace Graph_Systems_Lab_3
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SpindleCoordinatesViewModel _coords = new SpindleCoordinatesViewModel();
+
         private Database DB;
         private DataTable table;
         private MySqlDataAdapter adapter;
@@ -97,6 +100,7 @@ namespace Graph_Systems_Lab_3
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = _coords;
 
             DB = new Database();
             table = new DataTable();
@@ -163,6 +167,8 @@ namespace Graph_Systems_Lab_3
             {
                 baseLabel.Content = type_mt.Text + " " + name_mt.Text;
             }
+            var coords = this.getCoordsData();
+            _coords.SetCoordinates(coords.current, coords.target);
         }
 
         private void cncButton_Click(object sender, RoutedEventArgs e)
@@ -177,49 +183,44 @@ namespace Graph_Systems_Lab_3
             DB.closeConnection();
         }
 
-        //private void load_button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string st_name = name_mt.Text;
-        //    DataTable dt = new DataTable();
-        //    DB.openConnection();
-        //    MySqlCommand command = new MySqlCommand("select * from machine_tool_load where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + st_name + "'));", DB.GetConnection());
-        //    adapter.SelectCommand = command;
-        //    adapter.Fill(dt);
-        //    DB.closeConnection();
+        private (decimal[] current, decimal[] target) getCoordsData()
+        {
+            TimeSpan beginTime = time_begin.Value?.TimeOfDay ?? new TimeSpan(0, 0, 0);
+            TimeSpan endTime = time_end.Value?.TimeOfDay ?? new TimeSpan(23, 59, 59);
+            string timeBeginStr = beginTime.ToString(@"hh\:mm\:ss");
+            string timeEndStr = endTime.ToString(@"hh\:mm\:ss");
+            string mt_name = name_mt.Text;
+            DataTable dt = new DataTable();
+            DB.openConnection();
+            MySqlCommand command = new MySqlCommand(@"select * from machine_tool_properties 
+                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}'" +
+                                                      ";", DB.GetConnection());
 
-        //    int onSum = 0;
-        //    int loadSum = 0;
-        //    int offSum = 0;
+            adapter.SelectCommand = command;
+            adapter.Fill(dt);
+            DB.closeConnection();
 
-        //    foreach (DataRow dr in dt.Rows)
-        //    {
-        //        if ((string)dr["status"] == "on")
-        //        {
-        //            onSum += int.Parse((string)(dr["time_mtl"]));
-        //        }
-        //        if ((string)dr["status"] == "load")
-        //        {
-        //            loadSum += int.Parse((string)(dr["time_mtl"]));
-        //        }
-        //        if ((string)dr["status"] == "off")
-        //        {
-        //            offSum += int.Parse((string)(dr["time_mtl"]));
-        //        }
-        //    }
-        //    model.onPct = Math.Round((double)onSum * 100 / 1440.0);
-        //    model.loadPct = Math.Round((double)loadSum * 100 / 1440.0);
-        //    model.offPct = Math.Round((double)offSum * 100 / 1440.0);
+            decimal[] currentCoords = new decimal[5];
+            decimal[] endCoords = new decimal[5];
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                currentCoords[0] = (decimal)dr["currentX"];
+                currentCoords[1] = (decimal)dr["currentY"];
+                currentCoords[2] = (decimal)dr["currentZ"];
+                currentCoords[3] = (decimal)dr["currentC"];
+                currentCoords[4] = (decimal)dr["currentC'"];
 
-        //    double norm_on = load_column_chart.Height * model.onPct / 100;
-        //    double norm_load = load_column_chart.Height * model.loadPct / 100;
-        //    double norm_off = load_column_chart.Height * model.offPct / 100;
+                endCoords[0] = (decimal)dr["finalX"];
+                endCoords[1] = (decimal)dr["finalY"];
+                endCoords[2] = (decimal)dr["finalZ"];
+                endCoords[3] = (decimal)dr["finalC"];
+                endCoords[4] = (decimal)dr["finalC'"];
+            }
+           return (currentCoords, endCoords);
+        }
 
-        //    onButton.Height = norm_on;
-        //    offButton.Height = norm_off;
-        //    loadButton.Height = norm_load;
-
-        //    percentage_mt_load.Height = load_column_chart.Height;
-        //}
 
         private void workingButton_Click(object sender, RoutedEventArgs e)
         {
@@ -277,6 +278,48 @@ namespace Graph_Systems_Lab_3
                     LabelPoint = point => $"{point.Y:F1}°" // подпись: температура
                 }
             };
+        }
+    }
+
+    public class SpindleCoordinatesViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string prop = "") =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+
+        // Текущие
+        public string CurrentX { get; set; }
+        public string CurrentY { get; set; }
+        public string CurrentZ { get; set; }
+        public string CurrentC { get; set; }
+        public string CurrentC1 { get; set; }
+
+        // Конечные
+        public string TargetX { get; set; }
+        public string TargetY { get; set; }
+        public string TargetZ { get; set; }
+        public string TargetC { get; set; }
+        public string TargetC1 { get; set; }
+
+        // Метод для обновления
+        public void SetCoordinates(decimal[] current, decimal[] target)
+        {
+            if (current.Length >= 5 && target.Length >= 5)
+            {
+                CurrentX = current[0].ToString("F1");
+                CurrentY = current[1].ToString("F1");
+                CurrentZ = current[2].ToString("F1");
+                CurrentC = current[3].ToString("F1");
+                CurrentC1 = current[4].ToString("F1");
+
+                TargetX = target[0].ToString("F1");
+                TargetY = target[1].ToString("F1");
+                TargetZ = target[2].ToString("F1");
+                TargetC = target[3].ToString("F1");
+                TargetC1 = target[4].ToString("F1");
+
+                OnPropertyChanged(null); // обновить всё
+            }
         }
     }
 }
