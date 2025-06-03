@@ -22,6 +22,7 @@ using LiveCharts.Defaults;
 using Org.BouncyCastle.Asn1.Cms;
 using System.Runtime.CompilerServices;
 using Graph_Systems_Lab_3.ViewModels;
+using System.Globalization;
 
 
 
@@ -129,6 +130,9 @@ namespace Graph_Systems_Lab_3
                 model2.FeedPercent = cncData.feedPercent;
                 model2.SpeedPercent = cncData.speedPercent;
                 model2.TempMax = cncData.tempMax;
+
+                var tempData = GetTemperatures();
+                model2.TempX = tempData.tempX;
             }
         }
 
@@ -228,6 +232,29 @@ namespace Graph_Systems_Lab_3
            return (currentCoords, endCoords);
         }
 
+        private (double tempX, double tempY) GetTemperatures()
+        {
+            TimeSpan beginTime = time_begin.Value?.TimeOfDay ?? new TimeSpan(0, 0, 0);
+            TimeSpan endTime = time_end.Value?.TimeOfDay ?? new TimeSpan(23, 59, 59);
+            string timeBeginStr = beginTime.ToString(@"hh\:mm\:ss");
+            string timeEndStr = endTime.ToString(@"hh\:mm\:ss");
+            string mt_name = name_mt.Text;
+
+            var dt = MakeDbQuery(@"select * from machine_tool_properties 
+                                                      where (id_mtn=(select id_mtn from machine_tool_name where machine_tool_name='" + mt_name + "'))" +
+                                                      $"and time BETWEEN '{timeBeginStr}' AND '{timeEndStr}';");
+
+            double tempX = 0;
+            double tempY = 0;
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                tempX = Convert.ToDouble(dr["tempX"]);
+                tempY = Convert.ToDouble(dr["tempY"]);
+            }
+            return (tempX, tempY);
+        }
+
 
         private void workingButton_Click(object sender, RoutedEventArgs e)
         {
@@ -277,6 +304,32 @@ namespace Graph_Systems_Lab_3
                     LabelPoint = point => $"{point.Y:F1}°"
                 }
             };
+        }
+    }
+
+    public class TemperatureToHeightConverter : IValueConverter
+    {
+        public double MaxHeight { get; set; } = 140;
+        public double MaxTemp { get; set; } = 100; // Например, шкала до 100°C
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double temp)
+            {
+                temp = Clamp(temp, 0, MaxTemp);
+                return (temp / MaxTemp) * MaxHeight;
+            }
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+
+        private double Clamp(double value, double min, double max)
+        {
+            if (value < min) return min;
+            if (value > max) return max;
+            return value;
         }
     }
 }

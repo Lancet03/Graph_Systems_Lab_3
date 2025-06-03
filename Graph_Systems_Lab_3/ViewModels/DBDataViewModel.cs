@@ -16,6 +16,7 @@ namespace Graph_Systems_Lab_3.ViewModels
         private double _tempMax;
         private decimal _feedPercent;
         private decimal _speedPercent;
+        private double _tempX;
         private SeriesCollection seriesCollection;
 
 
@@ -185,6 +186,20 @@ namespace Graph_Systems_Lab_3.ViewModels
             }
         }
         private string _targetC1;
+
+        // Температура X
+        public double TempX
+        {
+            get { return _tempX; }
+            set
+            {
+                _tempX = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TempX)));
+                }
+            }
+        }
 
 
         public double Feed

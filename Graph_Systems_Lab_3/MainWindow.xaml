@@ -166,6 +166,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
+        <local:TemperatureToHeightConverter x:Key="TempToHeight" MaxTemp="120" MaxHeight="140"/>
     </Window.Resources>
 
     <Grid x:Name="base">
@@ -428,9 +431,13 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
                         <StackPanel Margin="10" HorizontalAlignment="Center">
                             <!-- Температурная шкала -->
                             <Grid Height="140" Width="40" Background="{StaticResource GLightnTextColor}" VerticalAlignment="Bottom">
-                                <Rectangle Height="50" Fill="#2ECC71" VerticalAlignment="Bottom"/>
+                                <Rectangle 
+        Fill="#2ECC71"
+        VerticalAlignment="Bottom"
+        Height="{Binding TempX, Converter={StaticResource TempToHeight}}" />
                             </Grid>
-                            <TextBlock Text="35,6" FontSize="14" FontWeight="Bold" 
+
+                            <TextBlock Text="{Binding TempX}" FontSize="14" FontWeight="Bold" 
 HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                             <TextBlock Text="X" FontSize="12" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                             <TextBlock Text="37" FontSize="11" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
@@ -605,7 +612,7 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
 
         <Label  Grid.Column="3" Grid.ColumnSpan="2" x:Name="baseLabel" FontSize="18" FontWeight="Bold"  
            FontFamily="arial" FontStyle="Italic" Height="28" HorizontalContentAlignment="Center" />
-       
+
 
     </Grid>
 
