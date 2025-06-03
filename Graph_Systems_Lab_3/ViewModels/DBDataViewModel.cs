@@ -11,13 +11,17 @@ namespace Graph_Systems_Lab_3.ViewModels
 {
     public class DBDataViewModel : INotifyPropertyChanged
     {
+        private SeriesCollection seriesCollection;
         private double _feed;
         private double _speed;
         private double _tempMax;
         private decimal _feedPercent;
         private decimal _speedPercent;
         private double _tempX;
-        private SeriesCollection seriesCollection;
+        private double _tempY;
+        private double _tempZ;
+        private double _tempC;
+        private double _tempCprot;
 
 
         public SeriesCollection SeriesCollection
@@ -201,6 +205,62 @@ namespace Graph_Systems_Lab_3.ViewModels
             }
         }
 
+
+        // Температура Y
+        public double TempY
+        {
+            get { return _tempY; }
+            set
+            {
+                _tempY = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TempY)));
+                }
+            }
+        }
+
+        // Температура Y
+        public double TempZ
+        {
+            get { return _tempZ; }
+            set
+            {
+                _tempZ = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TempZ)));
+                }
+            }
+        }
+
+        // Температура C
+        public double TempC
+        {
+            get { return _tempC; }
+            set
+            {
+                _tempC = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TempC)));
+                }
+            }
+        }
+
+        // Температура Cprot противошпинделя
+        public double TempCprot
+        {
+            get { return _tempCprot; }
+            set
+            {
+                _tempCprot = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(TempCprot)));
+                }
+            }
+        }
 
         public double Feed
         {

@@ -133,6 +133,10 @@ namespace Graph_Systems_Lab_3
 
                 var tempData = GetTemperatures();
                 model2.TempX = tempData.tempX;
+                model2.TempY = tempData.tempY;
+                model2.TempZ = tempData.tempZ;
+                model2.TempC = tempData.tempC;
+                model2.TempCprot = tempData.tempCprot;
             }
         }
 
@@ -229,10 +233,10 @@ namespace Graph_Systems_Lab_3
                 endCoords[3] = (decimal)dr["finalC"];
                 endCoords[4] = (decimal)dr["finalC'"];
             }
-           return (currentCoords, endCoords);
+            return (currentCoords, endCoords);
         }
 
-        private (double tempX, double tempY) GetTemperatures()
+        private (double tempX, double tempY, double tempZ, double tempC, double tempCprot) GetTemperatures()
         {
             TimeSpan beginTime = time_begin.Value?.TimeOfDay ?? new TimeSpan(0, 0, 0);
             TimeSpan endTime = time_end.Value?.TimeOfDay ?? new TimeSpan(23, 59, 59);
@@ -246,13 +250,19 @@ namespace Graph_Systems_Lab_3
 
             double tempX = 0;
             double tempY = 0;
+            double tempZ = 0;
+            double tempC = 0;
+            double tempCprot = 0;
             if (dt.Rows.Count > 0)
             {
                 DataRow dr = dt.Rows[0];
                 tempX = Convert.ToDouble(dr["tempX"]);
                 tempY = Convert.ToDouble(dr["tempY"]);
+                tempZ = Convert.ToDouble(dr["tempZ"]);
+                tempC = Convert.ToDouble(dr["tempC"]);
+                tempCprot = Convert.ToDouble(dr["tempC'"]);
             }
-            return (tempX, tempY);
+            return (tempX, tempY, tempZ, tempC, tempCprot);
         }
 
 
@@ -300,7 +310,7 @@ namespace Graph_Systems_Lab_3
                     PointGeometrySize = 6,
                     StrokeThickness = 2,
                     Fill = Brushes.Transparent,
-                    DataLabels = true, 
+                    DataLabels = true,
                     LabelPoint = point => $"{point.Y:F1}°"
                 }
             };

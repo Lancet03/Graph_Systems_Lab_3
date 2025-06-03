@@ -421,31 +421,105 @@ FontFamily="arial" Background="{StaticResource GElementBackgroundColor}" BorderB
 
         </StackPanel>
 
-        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Height="522">
+        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Height="522" VerticalAlignment="Top">
 
             <!-- Температурные индикаторы -->
             <Border Background="{StaticResource GElementBackgroundColor}" BorderBrush="{StaticResource GBorderColor}"  BorderThickness="1" CornerRadius="8" Padding="10" Margin="0 0 0 10" Width="393">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <!-- Повторяющийся шаблон для каждой оси -->
-                        <StackPanel Margin="10" HorizontalAlignment="Center">
-                            <!-- Температурная шкала -->
+                <StackPanel Orientation="Horizontal">
+
+                    <!-- Повторяющийся шаблон для каждой оси -->
+                    <StackPanel Margin="0,10,10,10" Orientation="Horizontal" >
+                        <!-- Температурная шкала -->
+                        <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Vertical">
                             <Grid Height="140" Width="40" Background="{StaticResource GLightnTextColor}" VerticalAlignment="Bottom">
                                 <Rectangle 
-        Fill="#2ECC71"
-        VerticalAlignment="Bottom"
-        Height="{Binding TempX, Converter={StaticResource TempToHeight}}" />
+                                    Fill="#2ECC71"
+                                    VerticalAlignment="Bottom"
+                                    Height="{Binding TempX, Converter={StaticResource TempToHeight}}" />
                             </Grid>
 
-                            <TextBlock Text="{Binding TempX}" FontSize="14" FontWeight="Bold" 
-HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
-                            <TextBlock Text="X" FontSize="12" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
-                            <TextBlock Text="37" FontSize="11" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
+
+                            <TextBlock Text="X" FontSize="14" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
+                            <Border CornerRadius="6" Height="22" Background="{StaticResource GLightnTextColor}" >
+
+                                <TextBlock Text="{ Binding TempX }" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Center" />
+
+                            </Border>
                         </StackPanel>
 
-                        <!-- другие оси (Y, Z, C, C') с разными цветами и значениями -->
-                        <!-- ... -->
+                        <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Vertical">
+                            <Grid Height="140" Width="40" Background="{StaticResource GLightnTextColor}" VerticalAlignment="Bottom">
+                                <Rectangle 
+                                    Fill="#2ECC71"
+                                    VerticalAlignment="Bottom"
+                                    Height="{Binding TempY, Converter={StaticResource TempToHeight}}" />
+                            </Grid>
+
+
+                            <TextBlock Text="Y" FontSize="14" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
+                            <Border CornerRadius="6" Height="22" Background="{StaticResource GLightnTextColor}" >
+
+                                <TextBlock Text="{ Binding TempY }" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Center" />
+
+                            </Border>
+                        </StackPanel>
+                        
+                        <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Vertical">
+                            <Grid Height="140" Width="40" Background="{StaticResource GLightnTextColor}" VerticalAlignment="Bottom">
+                                <Rectangle 
+                                    Fill="#2ECC71"
+                                    VerticalAlignment="Bottom"
+                                    Height="{Binding TempZ, Converter={StaticResource TempToHeight}}" />
+                            </Grid>
+
+
+                            <TextBlock Text="Z" FontSize="14" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
+                            <Border CornerRadius="6" Height="22" Background="{StaticResource GLightnTextColor}" >
+
+                                <TextBlock Text="{ Binding TempZ }" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Center" />
+
+                            </Border>
+                        </StackPanel>
+                        
+                        <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Vertical">
+                            <Grid Height="140" Width="40" Background="{StaticResource GLightnTextColor}" VerticalAlignment="Bottom">
+                                <Rectangle 
+                                    Fill="#2ECC71"
+                                    VerticalAlignment="Bottom"
+                                    Height="{Binding TempC, Converter={StaticResource TempToHeight}}" />
+                            </Grid>
+
+
+                            <TextBlock Text="C" FontSize="14" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
+                            <Border CornerRadius="6" Height="22" Background="{StaticResource GLightnTextColor}" >
+
+                                <TextBlock Text="{ Binding TempC }" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Center" />
+
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Vertical">
+                            <Grid Height="140" Width="40" Background="{StaticResource GLightnTextColor}" VerticalAlignment="Bottom">
+                                <Rectangle 
+                                    Fill="#2ECC71"
+                                    VerticalAlignment="Bottom"
+                                    Height="{Binding TempCprot, Converter={StaticResource TempToHeight}}" />
+                            </Grid>
+
+
+                            <TextBlock Text="С'" FontSize="14" HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
+                            <Border CornerRadius="6" Height="22" Background="{StaticResource GLightnTextColor}" >
+
+                                <TextBlock Text="{ Binding TempCprot }" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Center" />
+
+                            </Border>
+                        </StackPanel>
+
+
                     </StackPanel>
+
+                    <!-- другие оси (Y, Z, C, C') с разными цветами и значениями -->
+                    <!-- ... -->
+                    <Line X1="0" X2="1" Y1="0" Y2="205"  Stroke="{StaticResource GLightnTextColor}" StrokeThickness="1" Panel.ZIndex="10" VerticalAlignment="Center"/>
 
                     <!-- Tmax -->
                     <StackPanel HorizontalAlignment="Right" Margin="10 0 0 0">
@@ -459,7 +533,7 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
             </Border>
 
             <!-- F и S -->
-            <Border Background="{StaticResource GElementBackgroundColor}"  BorderBrush="{StaticResource GBorderColor}"  BorderThickness="1" CornerRadius="8" Padding="10" Margin="0 0 0 10" Width="398">
+            <Border Background="{StaticResource GElementBackgroundColor}"  BorderBrush="{StaticResource GBorderColor}"  BorderThickness="1" CornerRadius="8" Padding="10" Margin="0 20 0 10" Width="398">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -485,7 +559,7 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
             </Border>
 
             <!-- Координаты шпинделя -->
-            <Border Background="{StaticResource GElementBackgroundColor}" BorderBrush="{StaticResource GBorderColor}" CornerRadius="8" Padding="10" Width="399">
+            <Border Background="{StaticResource GElementBackgroundColor}" BorderBrush="{StaticResource GBorderColor}" Margin="0,20,0,0" CornerRadius="8" Padding="10" Width="399">
                 <StackPanel>
                     <TextBlock Text="Координаты шпинделя" Foreground="{StaticResource GLightnTextColor}" 
                      HorizontalAlignment="Center" Margin="0 0 0 8" FontSize="14"/>
@@ -510,19 +584,19 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                         <TextBlock Text="C’" Grid.Column="4" Foreground="{StaticResource GLightnTextColor}" HorizontalAlignment="Center"/>
 
                         <!-- Текущие -->
-                        <Border Grid.Row="1" Grid.Column="0" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Row="1" Grid.Column="0" Height="25" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding CurrentX}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="1" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Row="1" Grid.Column="1" Height="25" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding CurrentY}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="2" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Row="1" Grid.Column="2" Height="25" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding CurrentZ}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="3" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Row="1" Grid.Column="3"  Height="25" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding CurrentC}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="4" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Row="1" Grid.Column="4" Height="25" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding CurrentC1}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>
@@ -539,19 +613,19 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="0" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Column="0" CornerRadius="6" Height="25" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding TargetX}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Column="1" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Column="1" CornerRadius="6" Height="25" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding TargetY}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Column="2" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Column="2" CornerRadius="6" Height="25" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding TargetZ}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Column="3" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Column="3" CornerRadius="6" Height="25" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding TargetC}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Column="4" CornerRadius="6" Background="{StaticResource GLightnTextColor}" Margin="2">
+                        <Border Grid.Column="4" CornerRadius="6" Height="25" Background="{StaticResource GLightnTextColor}" Margin="2">
                             <TextBlock Text="{Binding TargetC1}" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>
