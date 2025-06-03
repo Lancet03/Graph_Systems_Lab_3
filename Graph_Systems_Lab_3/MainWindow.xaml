@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:Graph_Systems_Lab_3" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:Graph_Systems_Lab_3" 
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+        xmlns:vm="clr-namespace:Graph_Systems_Lab_3.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1050" Loaded="Window_Loaded" Background="#FFEBEBEB" HorizontalAlignment="Left" VerticalAlignment="Center" Icon="/logo.png">
     <Window.Resources>
@@ -558,8 +560,7 @@ HorizontalAlignment="Center" Foreground="{StaticResource GLightnTextColor}"/>
             <StackPanel Margin="0, 20, 0, 0">
                 <DockPanel x:Name="working_row_chart" Width="350" Height="270" HorizontalAlignment="Center">
                     <DockPanel.DataContext>
-                        <local:DBDataViewModel x:Name="model2"></local:DBDataViewModel>
-
+                        <vm:DBDataViewModel x:Name="model2"></vm:DBDataViewModel>
                     </DockPanel.DataContext>
                     <lvc:CartesianChart Series="{Binding SeriesCollection}" IsHitTestVisible="False">
                         <lvc:CartesianChart.AxisX>
